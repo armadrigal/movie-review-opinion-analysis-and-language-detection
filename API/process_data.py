@@ -3,6 +3,10 @@ import re
 class ProcessData:
 
     def __new__(cls, texts, vocabulary, language=None):
+        return cls._pipeline(texts, vocabulary, language)
+
+    @classmethod
+    def _pipeline(cls, texts, vocabulary, language):
         if language == None:
             texts = [cls._cleaning_text(text) for text in texts]
         elif language == 'es':
