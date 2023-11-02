@@ -45,3 +45,7 @@ class ProcessData:
                     vectoriced_sentence.append(0)
             vectoriced_sentences.append(vectoriced_sentence)
         return vectoriced_sentences
+
+    @classmethod
+    def _pad_texts(cls, texts):
+        return tf.keras.preprocessing.sequence.pad_sequences(texts, maxlen=150)
