@@ -25,3 +25,10 @@ class ProcessData:
         text = text.lower()
         text = re.sub(r'\s+', ' ', text)
         return text
+
+    @classmethod
+    def _tokenize_texts(cls, texts):
+        tokenized_sentences = []
+        for text in texts:
+            tokenized_sentences.append(text.split())
+        return tokenized_sentences
