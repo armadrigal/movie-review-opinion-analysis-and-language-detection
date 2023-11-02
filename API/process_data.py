@@ -1,4 +1,5 @@
-import re 
+import re
+import tensorflow as tf 
 
 class ProcessData:
 
