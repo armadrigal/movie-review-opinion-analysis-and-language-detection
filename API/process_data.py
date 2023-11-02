@@ -3,7 +3,16 @@ import re
 class ProcessData:
 
     def __new__(cls, texts, vocabulary, language=None):
-        pass
+        if language == None:
+            texts = [cls._cleaning_text(text) for text in texts]
+        elif language == 'es':
+            texts = [cls._cleaning_text_es(text) for text in texts]
+        elif language == 'en':
+            texts = [cls._cleaning_text_en(text) for text in texts]
+        texts = cls._tokenize_texts(texts)
+        texts = cls._vectorice_texts(texts, vocabulary)
+        texts = cls._pad_texts(texts)
+        return texts
 
     @classmethod
     def _cleaning_text(cls, text):
