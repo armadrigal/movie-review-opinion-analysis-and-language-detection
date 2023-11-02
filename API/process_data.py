@@ -32,3 +32,16 @@ class ProcessData:
         for text in texts:
             tokenized_sentences.append(text.split())
         return tokenized_sentences
+
+    @classmethod
+    def _vectorice_texts(cls, texts, vocabulary):
+        vectoriced_sentences = []
+        for text in texts:
+            vectoriced_sentence = []
+            for word in text:
+                if word in vocabulary:
+                    vectoriced_sentence.append(vocabulary[word])
+                else:
+                    vectoriced_sentence.append(0)
+            vectoriced_sentences.append(vectoriced_sentence)
+        return vectoriced_sentences
