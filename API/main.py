@@ -4,6 +4,7 @@ import pickle
 from api.language_detector_mlp import router as language_detector_mlp
 from api.language_detector_lstm import router as language_detector_lstm
 from api.language_detector_gru import router as language_detector_gru
+from api.language_detector import router as language_detector
 
 app = FastAPI()
 
@@ -23,5 +24,6 @@ with open("./vocabulary/stopwords_language_detector", "rb") as file:
 app.include_router(language_detector_mlp)
 app.include_router(language_detector_lstm)
 app.include_router(language_detector_gru)
+app.include_router(language_detector)
 
 
