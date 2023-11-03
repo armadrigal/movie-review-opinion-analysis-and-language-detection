@@ -17,12 +17,12 @@ class OutputData(BaseModel):
     en: float
     fr: float
 
-@router.post("/LanguageDetector/mlp")
-async def language_detector_mlp(data: List[InputData]):
+@router.post("/LanguageDetector/lstm")
+async def language_detector_lstm(data: List[InputData]):
 
     texts = [item.text for item in data]
     texts = ProcessData(texts, main.vocabulary_language_detector, main.stopwords_language_detector)
-    y_pred = np.round(main.model_mlp(texts), 2)
+    y_pred = np.round(main.model_lstm(texts),2)
 
     responses = []
     for i, item in enumerate(data):
