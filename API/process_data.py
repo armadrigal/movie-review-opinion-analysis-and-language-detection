@@ -3,42 +3,59 @@ import tensorflow as tf
 
 class ProcessData:
 
-    def __new__(cls, texts, vocabulary, language=None):
-        return cls._pipeline(texts, vocabulary, language)
+    def __new__(cls, texts, vocabulary, stopwords, language=None):
+        return cls._pipeline(texts, vocabulary, stopwords, language)
 
     @classmethod
-    def _pipeline(cls, texts, vocabulary, language):
+    def _pipeline(cls, texts, vocabulary, stopwords, language):
         if language == None:
-            texts = [cls._cleaning_text(text) for text in texts]
+            texts = cls._cleaning_text(texts)
         elif language == 'es':
-            texts = [cls._cleaning_text_es(text) for text in texts]
+            texts = cls._cleaning_text_es(texts)
         elif language == 'en':
-            texts = [cls._cleaning_text_en(text) for text in texts]
+            texts = cls._cleaning_text_en(texts)
         texts = cls._tokenize_texts(texts)
+        texts = cls._remove_stopwords(texts, stopwords)
         texts = cls._vectorice_texts(texts, vocabulary)
         texts = cls._pad_texts(texts)
         return texts
 
     @classmethod
-    def _cleaning_text(cls, text):
-        text = re.sub(r'[^a-zA-ZáéíóúñÁÉÍÓÚÑ\s\'-]', ' ', text)
-        text = text.lower().strip()
-        text = re.sub(r'\s+', ' ', text)
-        return text
+    def _cleaning_text(cls, texts):
+        clean_texts = []
+        for text in texts:
+            text = re.sub(r'[^a-zA-Záéíóúüñàâäéèêëîïôœùûç\']', ' ', text)
+            text = text.lower().strip()
+            text = re.sub(r'\s+', ' ', text)
+            clean_texts.append(text)
+        return clean_texts
 
     @classmethod
-    def _cleaning_text_es(text):
-        text = re.sub(r'[^a-zA-ZáéíóúñÁÉÍÓÚÑ]', ' ', text)
-        text = text.lower()
-        text = re.sub(r'\s+', ' ', text)
-        return text
+    def _cleaning_text_es(cls, texts):
+        clean_texts = []
+        for text in texts:
+            text = re.sub(r'[^a-zA-ZáéíóúñÁÉÍÓÚÑ]', ' ', text)
+            text = text.lower().strip()
+            text = re.sub(r'\s+', ' ', text)
+            clean_texts.append(text)
+        return clean_texts
 
     @classmethod
-    def _cleaning_text_en(text):
-        text = re.sub(r'[^a-zA-Z\s\'-]', '', text)
-        text = text.lower()
-        text = re.sub(r'\s+', ' ', text)
-        return text
+    def _cleaning_text_en(cls, texts):
+        clean_texts = []
+        for text in texts:
+            text = re.sub(r'[^a-zA-Z\s\'-]', '', text)
+            text = text.lower().strip()
+            text = re.sub(r'\s+', ' ', text)
+            clean_texts.append(text)
+        return clean_texts
+
+    @classmethod
+    def _remove_stopwords(cls, texts, stopwords):
+        texts_without_stopwords = []
+        for text in texts:
+            texts_without_stopwords.append([word for word in text if word not in stopwords])
+        return texts_without_stopwords
 
     @classmethod
     def _tokenize_texts(cls, texts):
