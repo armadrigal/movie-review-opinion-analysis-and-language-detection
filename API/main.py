@@ -7,6 +7,7 @@ from api.language_detector_lstm import router as language_detector_lstm
 from api.language_detector_gru import router as language_detector_gru
 from api.opinion_es_lstm import router as opinion_es_lstm
 from api.opinion_es_gru import router as opinion_es_gru
+from api.opinion_es_cnn import router as opinion_es_cnn
 from api.opinion_en_lstm import router as opinion_en_lstm
 from api.opinion_en_gru import router as opinion_en_gru
 from api.opinion_en_cnn import router as opinion_en_cnn
@@ -50,6 +51,7 @@ app.include_router(language_detector_lstm)
 app.include_router(language_detector_gru)
 app.include_router(opinion_es_lstm)
 app.include_router(opinion_es_gru)
+app.include_router(opinion_es_cnn)
 app.include_router(opinion_en_lstm)
 app.include_router(opinion_en_gru)
 app.include_router(opinion_en_cnn)
