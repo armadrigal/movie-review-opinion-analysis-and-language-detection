@@ -6,6 +6,7 @@ from api.language_detector_mlp import router as language_detector_mlp
 from api.language_detector_lstm import router as language_detector_lstm
 from api.language_detector_gru import router as language_detector_gru
 from api.opinion_es_lstm import router as opinion_es_lstm
+from api.opinion_es_gru import router as opinion_es_gru
 from api.opinion_en_lstm import router as opinion_en_lstm
 from api.opinion_en_gru import router as opinion_en_gru
 from api.opinion_en_cnn import router as opinion_en_cnn
@@ -42,12 +43,13 @@ with open("./vocabulary/stopwords_es", "rb") as file:
     stopwords_es = pickle.load(file)
 with open("./vocabulary/stopwords_en", "rb") as file:
     stopwords_en = pickle.load(file)
-    
+
 app.include_router(language_detector)
 app.include_router(language_detector_mlp)
 app.include_router(language_detector_lstm)
 app.include_router(language_detector_gru)
 app.include_router(opinion_es_lstm)
+app.include_router(opinion_es_gru)
 app.include_router(opinion_en_lstm)
 app.include_router(opinion_en_gru)
 app.include_router(opinion_en_cnn)
