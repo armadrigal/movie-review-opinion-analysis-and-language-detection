@@ -9,6 +9,7 @@ from api.opinion_es_lstm import router as opinion_es_lstm
 from api.opinion_es_gru import router as opinion_es_gru
 from api.opinion_es_cnn import router as opinion_es_cnn
 from api.opinion_es_attention import router as opinion_es_attention
+from api.opinion_es_lstm_attention import router as opinion_es_lstm_attention
 from api.opinion_en_lstm import router as opinion_en_lstm
 from api.opinion_en_gru import router as opinion_en_gru
 from api.opinion_en_cnn import router as opinion_en_cnn
@@ -27,6 +28,7 @@ model_lstm_es = tf.keras.models.load_model("./Models/model_lstm_es.h5")
 model_gru_es = tf.keras.models.load_model("./Models/model_gru_es.h5")
 model_cnn_es = tf.keras.models.load_model("./Models/model_cnn_es.h5")
 model_attention_es = tf.keras.models.load_model("./Models/model_attention_es.h5")
+model_lstm_attention_es = tf.keras.models.load_model("./Models/model_attention_es.h5")
 model_lstm_en = tf.keras.models.load_model("./Models/model_lstm_en.h5")
 model_gru_en = tf.keras.models.load_model("./Models/model_gru_en.h5")
 model_cnn_en = tf.keras.models.load_model("./Models/model_cnn_en.h5")
@@ -57,6 +59,7 @@ app.include_router(opinion_es_lstm)
 app.include_router(opinion_es_gru)
 app.include_router(opinion_es_cnn)
 app.include_router(opinion_es_attention)
+app.include_router(opinion_es_lstm_attention)
 app.include_router(opinion_en_lstm)
 app.include_router(opinion_en_gru)
 app.include_router(opinion_en_cnn)
