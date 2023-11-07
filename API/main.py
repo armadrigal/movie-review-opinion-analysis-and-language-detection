@@ -16,6 +16,7 @@ from api.opinion_en_cnn import router as opinion_en_cnn
 from api.opinion_en_attention import router as opinion_en_attention
 from api.opinion_en_lstm_attention import router as opinion_en_lstm_attention
 from api.opinion_fr_lstm import router as opinion_fr_lstm
+from api.opinion_fr_gru import router as opinion_fr_gru
 
 app = FastAPI()
 
@@ -36,6 +37,7 @@ model_cnn_en = tf.keras.models.load_model("./Models/model_cnn_en.h5")
 model_attention_en = tf.keras.models.load_model("./Models/model_attention_en.h5")
 model_lstm_attention_en = tf.keras.models.load_model("./Models/model_lstm_attention_en.h5")
 model_lstm_fr = tf.keras.models.load_model("./Models/model_lstm_fr.h5")
+model_gru_fr = tf.keras.models.load_model("./Models/model_gru_fr.h5")
 
 #Vocabularies 
 with open("./vocabulary/vocabulary_language_detector", "rb") as file:
@@ -72,5 +74,6 @@ app.include_router(opinion_en_cnn)
 app.include_router(opinion_en_attention)
 app.include_router(opinion_en_lstm_attention)
 app.include_router(opinion_fr_lstm)
+app.include_router(opinion_fr_gru)
 
 
