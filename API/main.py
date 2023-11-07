@@ -15,6 +15,7 @@ from api.opinion_en_gru import router as opinion_en_gru
 from api.opinion_en_cnn import router as opinion_en_cnn
 from api.opinion_en_attention import router as opinion_en_attention
 from api.opinion_en_lstm_attention import router as opinion_en_lstm_attention
+from api.opinion_fr_lstm import router as opinion_fr_lstm
 
 app = FastAPI()
 
@@ -28,12 +29,13 @@ model_lstm_es = tf.keras.models.load_model("./Models/model_lstm_es.h5")
 model_gru_es = tf.keras.models.load_model("./Models/model_gru_es.h5")
 model_cnn_es = tf.keras.models.load_model("./Models/model_cnn_es.h5")
 model_attention_es = tf.keras.models.load_model("./Models/model_attention_es.h5")
-model_lstm_attention_es = tf.keras.models.load_model("./Models/model_attention_es.h5")
+model_lstm_attention_es = tf.keras.models.load_model("./Models/model_lstm_attention_es.h5")
 model_lstm_en = tf.keras.models.load_model("./Models/model_lstm_en.h5")
 model_gru_en = tf.keras.models.load_model("./Models/model_gru_en.h5")
 model_cnn_en = tf.keras.models.load_model("./Models/model_cnn_en.h5")
 model_attention_en = tf.keras.models.load_model("./Models/model_attention_en.h5")
 model_lstm_attention_en = tf.keras.models.load_model("./Models/model_lstm_attention_en.h5")
+model_lstm_fr = tf.keras.models.load_model("./Models/model_lstm_fr.h5")
 
 #Vocabularies 
 with open("./vocabulary/vocabulary_language_detector", "rb") as file:
@@ -42,6 +44,8 @@ with open("./vocabulary/vocabulary_es", "rb") as file:
     vocabulary_es = pickle.load(file)
 with open("./vocabulary/vocabulary_en", "rb") as file:
     vocabulary_en = pickle.load(file)
+with open("./vocabulary/vocabulary_fr", "rb") as file:
+    vocabulary_fr = pickle.load(file)
 
 #Stopwords
 with open("./vocabulary/stopwords_language_detector", "rb") as file:
@@ -50,6 +54,8 @@ with open("./vocabulary/stopwords_es", "rb") as file:
     stopwords_es = pickle.load(file)
 with open("./vocabulary/stopwords_en", "rb") as file:
     stopwords_en = pickle.load(file)
+with open("./vocabulary/stopwords_fr", "rb") as file:
+    stopwords_fr = pickle.load(file)
 
 app.include_router(language_detector)
 app.include_router(language_detector_mlp)
@@ -65,5 +71,6 @@ app.include_router(opinion_en_gru)
 app.include_router(opinion_en_cnn)
 app.include_router(opinion_en_attention)
 app.include_router(opinion_en_lstm_attention)
+app.include_router(opinion_fr_lstm)
 
 
