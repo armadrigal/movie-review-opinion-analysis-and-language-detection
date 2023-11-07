@@ -14,6 +14,8 @@ class ProcessData:
             texts = cls._cleaning_text_es(texts)
         elif language == 'en':
             texts = cls._cleaning_text_en(texts)
+        elif language == 'fr':
+            texts = cls._cleaning_text_en(texts)
         texts = cls._tokenize_texts(texts)
         texts = cls._remove_stopwords(texts, stopwords)
         texts = cls._vectorice_texts(texts, vocabulary)
@@ -45,6 +47,16 @@ class ProcessData:
         clean_texts = []
         for text in texts:
             text = re.sub(r'[^a-zA-Z\s\'-]', '', text)
+            text = text.lower().strip()
+            text = re.sub(r'\s+', ' ', text)
+            clean_texts.append(text)
+        return clean_texts
+
+    @classmethod
+    def _cleaning_texts(texts):
+        clean_texts = []
+        for text in texts:
+            text = re.sub(r'[^a-zA-Záéíóúüñàâäéèêëîïôœùûç\']', ' ', text)
             text = text.lower().strip()
             text = re.sub(r'\s+', ' ', text)
             clean_texts.append(text)
