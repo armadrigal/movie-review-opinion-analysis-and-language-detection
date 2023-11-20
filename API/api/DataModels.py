@@ -32,7 +32,7 @@ class LanguagePrediction(BaseModel):
     pt: float
     it: float
 
-class OutputDataAllModels(BaseModel):
+class OutputDataAllModelsLanguage(BaseModel):
     id: int
     mlp: LanguagePrediction
     lstm: LanguagePrediction
