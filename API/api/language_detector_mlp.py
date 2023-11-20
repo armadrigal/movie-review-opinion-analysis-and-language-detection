@@ -1,21 +1,11 @@
 from fastapi import APIRouter
-from pydantic import BaseModel
 from typing import List
+from DataModels import InputData, OutputDataLanguage
 from process_data import ProcessData
 import main
 import numpy as np
 
 router = APIRouter()
-
-class InputData(BaseModel):
-    id: int
-    text: str
-
-class OutputData(BaseModel):
-    id: int
-    es: float
-    en: float
-    fr: float
 
 @router.post("/LanguageDetector/mlp")
 async def language_detector_mlp(data: List[InputData]):
@@ -26,7 +16,7 @@ async def language_detector_mlp(data: List[InputData]):
 
     responses = []
     for i, item in enumerate(data):
-        output_data = OutputData(id=item.id, es=y_pred[i,0], en=y_pred[i,1], fr=y_pred[i,2])
+        output_data = OutputDataLanguage(id=item.id, es=y_pred[i,0], en=y_pred[i,1], fr=y_pred[i,2], pt=y_pred[i,3], it=y_pred[i,4])
         responses.append(output_data)
 
     return responses
