@@ -1,39 +1,13 @@
 from fastapi import APIRouter
-from pydantic import BaseModel
-from typing import List
+from DataModels import InputDataCustomLanguage, OutputDataLanguage, LanguagePrediction, OutputDataAllModelsLanguage
 from process_data import ProcessData
 import main
 import numpy as np
 
 router = APIRouter()
 
-class InputTexts(BaseModel):
-    id: int
-    text: str
-
-class InputData(BaseModel):
-    model: str
-    texts: List[InputTexts]
-
-class OutputData(BaseModel):
-    id: int
-    es: float
-    en: float
-    fr: float
-
-class LanguagePrediction(BaseModel):
-    es: float
-    en: float
-    fr: float
-
-class OutputDataAllModels(BaseModel):
-    id: int
-    mlp: LanguagePrediction
-    lstm: LanguagePrediction
-    gru: LanguagePrediction
-
 @router.post("/LanguageDetector/")
-async def language_detector(data: InputData):
+async def language_detector(data: InputDataCustomLanguage):
 
     texts = [item.text for item in data.texts]
     texts = ProcessData(texts, main.vocabulary_language_detector, main.stopwords_language_detector)
@@ -49,7 +23,7 @@ async def language_detector(data: InputData):
 
         responses = []
         for i, item in enumerate(data.texts):
-            output_data = OutputData(id=item.id, es=y_pred[i,0], en=y_pred[i,1], fr=y_pred[i,2])
+            output_data = OutputDataLanguage(id=item.id, es=y_pred[i,0], en=y_pred[i,1], fr=y_pred[i,2], pt=y_pred[i,3], it=y_pred[i,4])
             responses.append(output_data)
 
         return responses
@@ -64,7 +38,7 @@ async def language_detector(data: InputData):
 
             responses = []
             for i, item in enumerate(data.texts):
-                output_data = OutputData(id=item.id, es=y_pred[i,0], en=y_pred[i,1], fr=y_pred[i,2])
+                output_data = OutputDataLanguage(id=item.id, es=y_pred[i,0], en=y_pred[i,1], fr=y_pred[i,2], pt=y_pred[i,3], it=y_pred[i,4])
                 responses.append(output_data)
 
             return responses
@@ -76,13 +50,13 @@ async def language_detector(data: InputData):
             for i, item in enumerate(data.texts):
             
                 y_pred_mlp = np.round(y_pred_mlp, 2)
-                mlp_pred = LanguagePrediction(es=y_pred_mlp[i,0], en=y_pred_mlp[i,1], fr=y_pred_mlp[i,2])
+                mlp_pred = LanguagePrediction(es=y_pred_mlp[i,0], en=y_pred_mlp[i,1], fr=y_pred_mlp[i,2], pt=y_pred_mlp[i,3], it=y_pred_mlp[i,4])
                 y_pred_lstm = np.round(y_pred_lstm, 2)
-                lstm_pred = LanguagePrediction(es=y_pred_lstm[i,0], en=y_pred_lstm[i,1], fr=y_pred_lstm[i,2])
+                lstm_pred = LanguagePrediction(es=y_pred_lstm[i,0], en=y_pred_lstm[i,1], fr=y_pred_lstm[i,2], pt=y_pred_lstm[i,3], it=y_pred_lstm[i,4])
                 y_pred_gru = np.round(y_pred_gru, 2)
-                gru_pred = LanguagePrediction(es=y_pred_gru[i,0], en=y_pred_gru[i,1], fr=y_pred_gru[i,2])
+                gru_pred = LanguagePrediction(es=y_pred_gru[i,0], en=y_pred_gru[i,1], fr=y_pred_gru[i,2], pt=y_pred_gru[i,3], it=y_pred_gru[i,4])
 
-                output_data = OutputDataAllModels(id=item.id, mlp=mlp_pred, lstm=lstm_pred, gru=gru_pred)
+                output_data = OutputDataAllModelsLanguage(id=item.id, mlp=mlp_pred, lstm=lstm_pred, gru=gru_pred)
 
                 responses.append(output_data)
 
