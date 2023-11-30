@@ -16,10 +16,10 @@ class OutputData(BaseModel):
     opinion: float
 
 @router.post("/OpinionAnalysis/fr/lstm")
-async def opinion_es_lstm(data: List[InputData]):
+async def opinion_fr_lstm(data: List[InputData]):
 
     texts = [item.text for item in data]
-    texts = ProcessData(texts, main.vocabulary_es, main.stopwords_es, language='fr')
+    texts = ProcessData(texts, main.vocabulary_fr, main.stopwords_fr, language='fr')
     y_pred = np.round(main.model_lstm_fr(texts), 2)
 
     responses = []

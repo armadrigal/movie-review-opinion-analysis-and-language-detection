@@ -12,7 +12,7 @@ async def opinion_it_lstm(data: List[InputData]):
 
     texts = [item.text for item in data]
     texts = ProcessData(texts, main.vocabulary_it, main.stopwords_it, language='it')
-    y_pred = np.round(main.model_lstma_it(texts), 2)
+    y_pred = np.round(main.model_lstm_it(texts), 2)
 
     responses = []
     for i, item in enumerate(data):

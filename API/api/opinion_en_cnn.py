@@ -15,7 +15,7 @@ class OutputData(BaseModel):
     id: int
     opinion: float
 
-@router.post("/OpinionAnalysis/cnn")
+@router.post("/OpinionAnalysis/en/cnn")
 async def opinion_en_cnn(data: List[InputData]):
 
     texts = [item.text for item in data]

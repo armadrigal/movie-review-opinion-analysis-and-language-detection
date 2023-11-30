@@ -8,7 +8,7 @@ import numpy as np
 router = APIRouter()
 
 @router.post("/OpinionAnalysis/pt/lstm")
-async def opinion_it_lstm(data: List[InputData]):
+async def opinion_pt_lstm(data: List[InputData]):
 
     texts = [item.text for item in data]
     texts = ProcessData(texts, main.vocabulary_pt, main.stopwords_pt, language='pt')

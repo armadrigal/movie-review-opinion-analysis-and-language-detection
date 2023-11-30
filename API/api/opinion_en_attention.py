@@ -1,21 +1,13 @@
 from fastapi import APIRouter
-from pydantic import BaseModel
 from typing import List
+from DataModels import InputData, OutputDataOpinion
 from process_data import ProcessData
 import main
 import numpy as np
 
 router = APIRouter()
 
-class InputData(BaseModel):
-    id: int
-    text: str
-
-class OutputData(BaseModel):
-    id: int
-    opinion: float
-
-@router.post("/OpinionAnalysis/attention")
+@router.post("/OpinionAnalysis/en/attention")
 async def opinion_en_attention(data: List[InputData]):
 
     texts = [item.text for item in data]
@@ -24,7 +16,7 @@ async def opinion_en_attention(data: List[InputData]):
 
     responses = []
     for i, item in enumerate(data):
-        output_data = OutputData(id=item.id, opinion=round(y_pred[i,0],2))
+        output_data = OutputDataOpinion(id=item.id, opinion=round(y_pred[i,0],2))
         responses.append(output_data)
 
     return responses

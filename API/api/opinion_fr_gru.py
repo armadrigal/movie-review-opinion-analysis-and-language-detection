@@ -16,7 +16,7 @@ class OutputData(BaseModel):
     opinion: float
 
 @router.post("/OpinionAnalysis/fr/gru")
-async def opinion_es_lstm(data: List[InputData]):
+async def opinion_fr_gru(data: List[InputData]):
 
     texts = [item.text for item in data]
     texts = ProcessData(texts, main.vocabulary_fr, main.stopwords_fr, language='fr')
